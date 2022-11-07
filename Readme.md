@@ -1,0 +1,1 @@
+* Negociacao deve ser imutavel 
