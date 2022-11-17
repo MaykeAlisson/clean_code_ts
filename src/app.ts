@@ -1,5 +1,8 @@
+import { Motive } from "./models/Motive.js";
 import { Negociacao } from "./models/Negociacao.js";
 import Negociacoes from "./models/Negociacoes.js";
+
+import axios from "../node_modules/axios/index.js";
 
 const n1 = criarNegociacao(new Date(2022, 10, 24), 12, 10.45);
 const n2 = criarNegociacao(new Date(2022, 11, 4), 9, 100.45);
@@ -12,7 +15,30 @@ negociacoes.adicionar(n3);
 const lista = negociacoes.listar()
 
 console.log(lista)
+console.log(apiRest())
 
 function criarNegociacao(data: Date, qtd: number, valor: number): Negociacao {
     return new Negociacao(data, qtd, valor);
+}
+
+interface Root {
+    slip: Slip
+}
+
+interface Slip {
+    id: number
+    advice: string
+}
+
+
+function apiRest() {
+    const url = 'https://api.adviceslip.com/advice';
+
+    axios(url)
+        .then((res: any) => res.json())
+        .then((dado: Root )=> {
+           return new Motive(dado.slip.id, dado.slip.advice)
+        }).then((motive: Motive) => {
+            console.log(motive)
+        })
 }
