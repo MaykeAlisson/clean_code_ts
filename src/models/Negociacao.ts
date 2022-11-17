@@ -1,8 +1,10 @@
 export class Negociacao {
+    
     constructor(
         private _data: Date,
         public readonly quantidade: number,
-        public readonly valor: number
+        public readonly valor: number,
+        public readonly prioridade = false
     ) { }
 
     get data(): Date {
